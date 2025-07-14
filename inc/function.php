@@ -69,7 +69,7 @@ function liste_categorie()
 
 function filtre_objet_par_categorie($where)
 {
-    $query = "SELECT o.nom_objet, c.nom_categorie, e.date_retour
+    $query = "SELECT o.nom_objet, o.id_objet, c.nom_categorie, e.date_retour
               FROM objet o
               JOIN categorie_objet c ON o.id_categorie = c.id_categorie
               LEFT JOIN emprunt e ON o.id_objet = e.id_objet AND e.date_retour IS NULL
@@ -79,7 +79,7 @@ function filtre_objet_par_categorie($where)
 
 function upload_image($id,$file)
 {
-    $query = "INSERT INTO images_objet (id_objet, nom_image) VALUES ($id, $file)";
+    $query = "update images_objet set nom_image = '$file' where id_objet = $id";
     $resultat = mysqli_query(bdconnect(), $query);
     if (!$resultat) {
         return 0;
@@ -87,5 +87,43 @@ function upload_image($id,$file)
         return $resultat;
     }
 }
+
+
+
+
+
+
+
+
+// function get_objet_par_id($id) {
+//     global $connexion;
+//     $sql = "SELECT o.*, c.nom_categorie FROM objet o
+//             JOIN categorie c ON o.id_categorie = c.id_categorie
+//             WHERE o.id_objet = ?";
+//     $stmt = mysqli_prepare($connexion, $sql);
+//     mysqli_stmt_bind_param($stmt, "i", $id);
+//     mysqli_stmt_execute($stmt);
+//     return mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+// }
+
+// function get_images_supplementaires($id) {
+//     global $connexion;
+//     $sql = "SELECT image FROM image_objet WHERE id_objet = ?";
+//     $stmt = mysqli_prepare($connexion, $sql);
+//     mysqli_stmt_bind_param($stmt, "i", $id);
+//     mysqli_stmt_execute($stmt);
+//     return mysqli_stmt_get_result($stmt);
+// }
+
+function get_historique_emprunts($id) {
+    $query = "SELECT e.nom AS nom_membre, h.date_emprunt, h.date_retour
+            FROM  emprunt h
+            JOIN membre e ON e.id_membre = h.id_membre
+            WHERE h.id_objet = '$id'
+            ORDER BY h.date_emprunt DESC";
+   $resultat = mysqli_query(bdconnect(), $query);
+   return $resultat;
+}
+
 
 ?>

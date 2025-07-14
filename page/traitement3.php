@@ -2,6 +2,8 @@
     include("../inc/connexion.php");
     include("../inc/function.php");
 
+    $id_objet = $_POST["id_objet"];
+
     $uploadDir = "assets" . '/image/';
     $maxSize = 200 * 1024 * 1024; // 200 Mo
     $allowedMimeTypes = ['image/jpeg', 'image/png', 'application/pdf'];
@@ -10,7 +12,7 @@
     $file = $_FILES['fichier'];
     if ($file['error'] !== UPLOAD_ERR_OK) {
         $file = null;
-        $publication = publier($description, idconnecte($mail), $file);
+        $publication = upload_image($id_objet,$file);
 
         if ($publication) {
             header('Location:accueil.php');
@@ -35,7 +37,7 @@
         $sary = $newName;
     }
     }
-    $publication = publier($description, $id, $sary);
+    $publication = upload_image($id_objet,$sary);
 
     if ($publication) {
         header('Location:accueil.php');

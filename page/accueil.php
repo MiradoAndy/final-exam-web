@@ -55,19 +55,28 @@ $result = filtre_objet_par_categorie($where);
                 <?php while ($row = mysqli_fetch_assoc($result)) { ?>
                     <div class="col">
                         <div class="card h-100 shadow-sm">
-                            <?php if (!empty($row['image'])): ?>
-                                <img src="../assets/image/<?= htmlspecialchars($row['image']) ?>" class="card-img-top" alt="Image de l'objet">
-                            <?php else: ?>
-                                <img src="../assets/image/default.jpg" class="card-img-top" alt="Image par défaut">
-                            <?php endif; ?>
+                            <a href="fiche_objet.php?id=<?= $row['id_objet'] ?>" class="stretched-link text-decoration-none">
+                                <?php if (!empty($row['image'])): ?>
+                                    <img src="../assets/image/<?= htmlspecialchars($row['image']) ?>" class="card-img-top" alt="Image de l'objet">
+                                <?php else: ?>
+                                    <img src="../assets/image/default.jpg" class="card-img-top" alt="Image par défaut">
+                                <?php endif; ?>
 
-                            <div class="card-body">
-                                <h5 class="card-title"><?= htmlspecialchars($row['nom_objet']) ?></h5>
-                                <p class="card-text">
-                                    <strong>Catégorie :</strong> <?= htmlspecialchars($row['nom_categorie']) ?><br>
-                                    <strong>Retour prévu :</strong> <?= !empty($row['date_retour']) ? htmlspecialchars($row['date_retour']) : 'Disponible' ?>
-                                </p>
-                            </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"><?= htmlspecialchars($row['nom_objet']) ?></h5>
+                                    <p class="card-text">
+                                        <strong>Catégorie :</strong> <?= htmlspecialchars($row['nom_categorie']) ?><br>
+                                        <strong>Retour prévu :</strong> <?= !empty($row['date_retour']) ? htmlspecialchars($row['date_retour']) : 'Disponible' ?>
+                                    </p>
+                                    <form action="traitement3.php" method="post">
+                                        <input type="file" name="fichier" id="fichier" required><br><br>
+                                        <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
+                                        <button type="submit" class="btn btn-primary">Uploader</button>
+                                    </form>
+
+                                </div>
+                            </a>
+
                         </div>
                     </div>
                 <?php } ?>
@@ -77,4 +86,5 @@ $result = filtre_objet_par_categorie($where);
         <?php endif; ?>
     </div>
 </body>
+
 </html>
