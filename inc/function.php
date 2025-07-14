@@ -23,10 +23,37 @@ $queryCheck = "SELECT * FROM membre WHERE email = '$email'";
 $resultCheck = mysqli_query(bdconnect(), $queryCheck);
 
 if (mysqli_num_rows($resultCheck) > 0) {
-    return true; // Email already exists
+    return true; 
 } else {
-    return false; // Email does not exist
+    return false; 
 }
+}
+
+function login($email, $mdp)
+{
+    $query = "select * from membre where email='$email' and mdp='$mdp'";
+    $resultat = mysqli_query(bdconnect(),$query);
+    if (!$resultat) {
+        return 0;
+    }
+    else {
+        return $resultat;
+    }
+}
+
+function liste_objet()
+{
+    $query = "SELECT o.nom_objet, c.nom_categorie, e.date_retour
+        FROM objet o
+        JOIN categorie_objet c ON o.id_categorie = c.id_categorie
+        JOIN emprunt e ON o.id_objet = e.id_objet 
+        AND e.date_retour IS NULL";
+    $resultat = mysqli_query(bdconnect(), $query);
+    if (!$resultat) {
+        return 0;
+    } else {
+        return $resultat;
+    }
 }
 
 ?>

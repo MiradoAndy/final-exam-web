@@ -1,6 +1,7 @@
 <?php
     $bdd = mysqli_connect('localhost', 'root', '', 'base');
-    session_start();
+    include('../inc/function.php');
+    
     $email = $_POST['email'];
     $mdp = $_POST['mdp'];
 
@@ -9,13 +10,9 @@
         exit();
     }
 
-    $query = sprintf("select idMembre,Nom from membres where Email='$email' and Motdepasse='$mdp'");
-    $resultat = mysqli_query($bdd,$query);
+    $verification = login($email, $mdp);
 
-    if ($resultat && mysqli_num_rows($resultat) === 1) {
-        $x = mysqli_fetch_assoc($resultat);
-        $_SESSION['id'] = $x['idMembre'];
-        $_SESSION['Nom'] = $x['Nom'];
+    if ($verification != 0 && mysqli_num_rows($verification) === 1) {
         header('Location:accueil.php');
         exit();
     } else {

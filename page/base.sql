@@ -2,7 +2,7 @@ create database base;
 use base;
 
 CREATE TABLE membre (
-    id_membre INT PRIMARY KEY,
+    id_membre INT PRIMARY KEY auto_increment,
     nom VARCHAR(100),
     date_naissance DATE,
     genre VARCHAR(10),
@@ -13,25 +13,25 @@ CREATE TABLE membre (
 );
 
 CREATE TABLE categorie_objet (
-    id_categorie INT PRIMARY KEY,
+    id_categorie INT PRIMARY KEY auto_increment,
     nom_categorie VARCHAR(100)
 );
 
 CREATE TABLE objet (
-    id_objet INT PRIMARY KEY,
+    id_objet INT PRIMARY KEY auto_increment,
     nom_objet VARCHAR(100),
     id_categorie INT,
     id_membre INT
 );
 
 CREATE TABLE images_objet (
-    id_image INT PRIMARY KEY,
+    id_image INT PRIMARY KEY auto_increment,
     id_objet INT,
     nom_image VARCHAR(255)
 );
 
 CREATE TABLE emprunt (
-    id_emprunt INT PRIMARY KEY,
+    id_emprunt INT PRIMARY KEY auto_increment,
     id_objet INT,
     id_membre INT,
     date_emprunt DATE,
@@ -40,10 +40,10 @@ CREATE TABLE emprunt (
 
 -- Membres
 INSERT INTO membre VALUES
-(1, 'Alice', '1995-06-12', 'F', 'alice@email.com', 'Paris', 'mdp1', 'alice.jpg'),
-(2, 'Bob', '1990-08-22', 'M', 'bob@email.com', 'Lyon', 'mdp2', 'bob.jpg'),
-(3, 'Charlie', '1988-03-15', 'M', 'charlie@email.com', 'Nice', 'mdp3', 'charlie.jpg'),
-(4, 'Diane', '2000-12-01', 'F', 'diane@email.com', 'Toulouse', 'mdp4', 'diane.jpg');
+(1, 'Alice', '1995-06-12', 'femme', 'alice@email.com', 'Paris', 'mdp1', 'alice.jpg'),
+(2, 'Bob', '1990-08-22', 'homme', 'bob@email.com', 'Lyon', 'mdp2', 'bob.jpg'),
+(3, 'Charlie', '1988-03-15', 'homme', 'charlie@email.com', 'Nice', 'mdp3', 'charlie.jpg'),
+(4, 'Mirado' , '2005-03-13', 'autre', 'mirado@gmail.com' , 'Antananarivo', '123', 'mirado.jpg');
 
 -- Catégories
 INSERT INTO categorie_objet VALUES
