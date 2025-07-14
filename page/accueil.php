@@ -61,21 +61,21 @@ $result = filtre_objet_par_categorie($where);
                                 <?php else: ?>
                                     <img src="../assets/image/default.jpg" class="card-img-top" alt="Image par défaut">
                                 <?php endif; ?>
-
-                                <div class="card-body">
-                                    <h5 class="card-title"><?= htmlspecialchars($row['nom_objet']) ?></h5>
-                                    <p class="card-text">
-                                        <strong>Catégorie :</strong> <?= htmlspecialchars($row['nom_categorie']) ?><br>
-                                        <strong>Retour prévu :</strong> <?= !empty($row['date_retour']) ? htmlspecialchars($row['date_retour']) : 'Disponible' ?>
-                                    </p>
-                                    <form action="traitement3.php" method="post">
-                                        <input type="file" name="fichier" id="fichier" required><br><br>
-                                        <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
-                                        <button type="submit" class="btn btn-primary">Uploader</button>
-                                    </form>
-
-                                </div>
                             </a>
+
+                            <div class="card-body">
+                                <h5 class="card-title"><?= htmlspecialchars($row['nom_objet']) ?></h5>
+                                <p class="card-text">
+                                    <strong>Catégorie :</strong> <?= htmlspecialchars($row['nom_categorie']) ?><br>
+                                    <strong>Retour prévu :</strong> <?= !empty($row['date_retour']) ? htmlspecialchars($row['date_retour']) : 'Disponible' ?>
+                                </p>
+                                <form action="traitement3.php" method="post">
+                                    <input type="file" name="fichier" id="fichier" required><br><br>
+                                    <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
+                                    <button type="submit" class="btn btn-primary">Uploader</button>
+                                </form>
+
+                            </div>
 
                         </div>
                     </div>
