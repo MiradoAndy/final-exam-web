@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bienvenue</title>
-    <link href="../assets/css/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <script src="../assets/css/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/css/js/bootstrap.bundle.min.js"></script>
     <div class="container text-center mt-5">
         <h1 class="mb-4">Bienvenue</h1>
         <div class="d-flex justify-content-center gap-3">
