@@ -79,7 +79,6 @@ $result = filtre_objet_par_categorie($where);
                                 </form>
 
                                 <?php if (empty($row['date_retour'])): ?>
-                                    <!-- <form action="emprunter.php" method="post" class="mt-3"> -->
                                         <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
 
                                         <label for="nb_jours_<?= $row['id_objet'] ?>" class="form-label">Nombre de jours :</label>
@@ -92,7 +91,6 @@ $result = filtre_objet_par_categorie($where);
                                         <p class="mt-2 text-muted" id="dispo_<?= $row['id_objet'] ?>"></p>
 
                                         <button type="submit" class="btn btn-success mt-2">Emprunter</button>
-                                    <!-- </form> -->
                                 <?php endif; ?>
                             </div>
                         </div>
