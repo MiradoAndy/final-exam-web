@@ -1,8 +1,8 @@
 <?php
 function bdconnect()
 {
-    // $bdd = mysqli_connect('localhost', 'ETU004356', 'UTQVmBxb', 'db_s2_ETU004356');
-    $bdd = mysqli_connect('localhost', 'root', '', 'base');
+    $bdd = mysqli_connect('localhost', 'ETU004356', 'UTQVmBxb', 'db_s2_ETU004356');
+    // $bdd = mysqli_connect('localhost', 'root', '', 'base');
     return $bdd;
 }
 
@@ -67,19 +67,32 @@ function liste_categorie()
     }
 }
 
+// function filtre_objet_par_categorie($where = "")
+// {
+//     $query = "SELECT o.nom_objet, o.id_objet, c.nom_categorie, e.date_retour
+//               FROM objet o
+//               JOIN categorie_objet c ON o.id_categorie = c.id_categorie
+//               LEFT JOIN emprunt e ON o.id_objet = e.id_objet
+//               $where";
+//     return mysqli_query(bdconnect(), $query);
+// }
+
 function filtre_objet_par_categorie($where = "")
 {
-    $query = "SELECT o.nom_objet, o.id_objet, c.nom_categorie, e.date_retour
+    $query = "SELECT o.nom_objet, o.id_objet, c.nom_categorie, e.date_retour, i.nom_image AS image
               FROM objet o
               JOIN categorie_objet c ON o.id_categorie = c.id_categorie
               LEFT JOIN emprunt e ON o.id_objet = e.id_objet
+              LEFT JOIN images_objet i ON o.id_objet = i.id_objet
               $where";
     return mysqli_query(bdconnect(), $query);
 }
 
+
 function upload_image($id,$file)
 {
-    $query = "update images_objet set nom_image = '$file' where id_objet = $id";
+    $safeFile = mysqli_real_escape_string(bdconnect(), $file);
+    $query = "UPDATE images_objet SET nom_image = '$safeFile' WHERE id_objet = $id";
     $resultat = mysqli_query(bdconnect(), $query);
     if (!$resultat) {
         return 0;

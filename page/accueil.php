@@ -55,13 +55,16 @@ $result = filtre_objet_par_categorie($where);
                 <?php while ($row = mysqli_fetch_assoc($result)) { ?>
                     <div class="col">
                         <div class="card h-100 shadow-sm">
-                            <a href="fiche_objet.php?id=<?= $row['id_objet'] ?>" class="stretched-link text-decoration-none">
-                                <?php if (!empty($row['image'])): ?>
+                            <?php if (!empty($row['image'])): ?>
+                                <a href="fiche_objet.php?id=<?= $row['id_objet'] ?>">
                                     <img src="../assets/image/<?= htmlspecialchars($row['image']) ?>" class="card-img-top" alt="Image de l'objet">
-                                <?php else: ?>
+                                </a>
+                            <?php else: ?>
+                                <a href="fiche_objet.php?id=<?= $row['id_objet'] ?>">
                                     <img src="../assets/image/default.jpg" class="card-img-top" alt="Image par défaut">
-                                <?php endif; ?>
-                            </a>
+                                </a>
+                            <?php endif; ?>
+
 
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($row['nom_objet']) ?></h5>
@@ -69,7 +72,7 @@ $result = filtre_objet_par_categorie($where);
                                     <strong>Catégorie :</strong> <?= htmlspecialchars($row['nom_categorie']) ?><br>
                                     <strong>Retour prévu :</strong> <?= !empty($row['date_retour']) ? htmlspecialchars($row['date_retour']) : 'Disponible' ?>
                                 </p>
-                                <form action="traitement3.php" method="post">
+                                <form action="traitement3.php" method="post" enctype="multipart/form-data">
                                     <input type="file" name="fichier" id="fichier" required><br><br>
                                     <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
                                     <button type="submit" class="btn btn-primary">Uploader</button>
