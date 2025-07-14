@@ -77,4 +77,15 @@ function filtre_objet_par_categorie($where)
     return mysqli_query(bdconnect(), $query);
 }
 
+function upload_image($id,$file)
+{
+    $query = "INSERT INTO images_objet (id_objet, nom_image) VALUES ($id, $file)";
+    $resultat = mysqli_query(bdconnect(), $query);
+    if (!$resultat) {
+        return 0;
+    } else {
+        return $resultat;
+    }
+}
+
 ?>
