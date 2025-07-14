@@ -1,8 +1,8 @@
 <?php
 function bdconnect()
 {
-    $bdd = mysqli_connect('localhost', 'ETU004356', 'UTQVmBxb', 'db_s2_ETU004356');
-    // $bdd = mysqli_connect('localhost', 'root', '', 'base');
+    // $bdd = mysqli_connect('localhost', 'ETU004356', 'UTQVmBxb', 'db_s2_ETU004356');
+    $bdd = mysqli_connect('localhost', 'root', '', 'base');
     return $bdd;
 }
 
@@ -138,5 +138,17 @@ function get_historique_emprunts($id) {
    return $resultat;
 }
 
+// function calculerDateRetour(select, id) {
+//         const jours = parseInt(select.value);
+//         const today = new Date();
+//         today.setDate(today.getDate() + jours);
+
+//         const yyyy = today.getFullYear();
+//         const mm = String(today.getMonth() + 1).padStart(2, '0');
+//         const dd = String(today.getDate()).padStart(2, '0');
+
+//         const dateDispo = `${yyyy}-${mm}-${dd}`;
+//         document.getElementById('dispo_' + id).innerText = "Disponible le " + dateDispo;
+//     }
 
 ?>

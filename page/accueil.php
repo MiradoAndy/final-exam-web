@@ -65,21 +65,36 @@ $result = filtre_objet_par_categorie($where);
                                 </a>
                             <?php endif; ?>
 
-
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($row['nom_objet']) ?></h5>
                                 <p class="card-text">
                                     <strong>Catégorie :</strong> <?= htmlspecialchars($row['nom_categorie']) ?><br>
                                     <strong>Retour prévu :</strong> <?= !empty($row['date_retour']) ? htmlspecialchars($row['date_retour']) : 'Disponible' ?>
                                 </p>
+
                                 <form action="traitement3.php" method="post" enctype="multipart/form-data">
                                     <input type="file" name="fichier" id="fichier" required><br><br>
                                     <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
                                     <button type="submit" class="btn btn-primary">Uploader</button>
                                 </form>
 
-                            </div>
+                                <?php if (empty($row['date_retour'])): ?>
+                                    <!-- <form action="emprunter.php" method="post" class="mt-3"> -->
+                                        <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
 
+                                        <label for="nb_jours_<?= $row['id_objet'] ?>" class="form-label">Nombre de jours :</label>
+                                        <select name="nb_jours" id="nb_jours_<?= $row['id_objet'] ?>" class="form-select" onchange="calculerDateRetour(this, <?= $row['id_objet'] ?>)">
+                                            <?php for ($i = 1; $i <= 30; $i++): ?>
+                                                <option value="<?= $i ?>"><?= $i ?> jour<?= $i > 1 ? 's' : '' ?></option>
+                                            <?php endfor; ?>
+                                        </select>
+
+                                        <p class="mt-2 text-muted" id="dispo_<?= $row['id_objet'] ?>"></p>
+
+                                        <button type="submit" class="btn btn-success mt-2">Emprunter</button>
+                                    <!-- </form> -->
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                 <?php } ?>
@@ -88,6 +103,20 @@ $result = filtre_objet_par_categorie($where);
             <div class="alert alert-info text-center">Aucun objet trouvé.</div>
         <?php endif; ?>
     </div>
-</body>
 
+    <script>
+    function calculerDateRetour(select, id) {
+        const jours = parseInt(select.value);
+        const today = new Date();
+        today.setDate(today.getDate() + jours);
+
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+
+        const dateDispo = `${yyyy}-${mm}-${dd}`;
+        document.getElementById('dispo_' + id).innerText = "Disponible le " + dateDispo;
+    }
+    </script>
+</body>
 </html>
