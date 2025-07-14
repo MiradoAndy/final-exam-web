@@ -55,12 +55,17 @@ $result = filtre_objet_par_categorie($where);
                 <?php while ($row = mysqli_fetch_assoc($result)) { ?>
                     <div class="col">
                         <div class="card h-100 shadow-sm">
+                            <?php if (!empty($row['image'])): ?>
+                                <img src="../assets/image/<?= htmlspecialchars($row['image']) ?>" class="card-img-top" alt="Image de l'objet">
+                            <?php else: ?>
+                                <img src="../assets/image/default.jpg" class="card-img-top" alt="Image par défaut">
+                            <?php endif; ?>
+
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($row['nom_objet']) ?></h5>
                                 <p class="card-text">
                                     <strong>Catégorie :</strong> <?= htmlspecialchars($row['nom_categorie']) ?><br>
-                                    <strong>Retour prévu :</strong>
-                                    <?= !empty($row['date_retour']) ? htmlspecialchars($row['date_retour']) : 'Disponible' ?>
+                                    <strong>Retour prévu :</strong> <?= !empty($row['date_retour']) ? htmlspecialchars($row['date_retour']) : 'Disponible' ?>
                                 </p>
                             </div>
                         </div>
