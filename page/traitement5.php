@@ -1,5 +1,6 @@
 <?php
 include("../inc/connexion.php");
+include("../inc/function.php");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_objet = intval($_POST['id_objet'] ?? 0);

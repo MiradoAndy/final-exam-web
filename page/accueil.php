@@ -81,35 +81,33 @@ $result = filtre_objet_par_categorie($where);
                                 </form>
 
                                 <?php if (empty($row['date_retour'])): ?>
-                                    <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
+                                    <form action="traitement4.php" method="post">
+                                        <input type="hidden" name="id_objet" value="<?= $row['id_objet'] ?>">
+                                        <label for="nb_jours_<?= $row['id_objet'] ?>">Nombre de jours :</label>
+                                        <select name="nb_jours" id="nb_jours_<?= $row['id_objet'] ?>" class="form-select" required>
+                                            <?php for ($i = 1; $i <= 30; $i++): ?>
+                                                <option value="<?= $i ?>"><?= $i ?> jour<?= $i > 1 ? 's' : '' ?></option>
+                                            <?php endfor; ?>
+                                        </select>
+                                        <button type="submit" class="btn btn-success mt-2">Emprunter</button>
+                                    </form>
 
-                                    <label for="nb_jours_<?= $row['id_objet'] ?>" class="form-label">Nombre de jours :</label>
-                                    <select name="nb_jours" id="nb_jours_<?= $row['id_objet'] ?>" class="form-select" onchange="calculerDateRetour(this, <?= $row['id_objet'] ?>)">
-                                        <?php for ($i = 1; $i <= 30; $i++): ?>
-                                            <option value="<?= $i ?>"><?= $i ?> jour<?= $i > 1 ? 's' : '' ?></option>
-                                        <?php endfor; ?>
-                                    </select>
-
-                                    <p class="mt-2 text-muted" id="dispo_<?= $row['id_objet'] ?>"></p>
-
-                                    <button type="submit" class="btn btn-success mt-2">Emprunter</button>
                                 <?php endif; ?>
 
 
 
 
                                 <?php if (!empty($row['date_retour'])): ?>
-                                    <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>"><br>
+                                    <form action="traitement5.php" method="post">
+                                        <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
+                                        <select name="etat" class="form-select" required>
+                                            <option value="">État du produit</option>
+                                            <option value="ok">ok</option>
+                                            <option value="abime">abimé</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-success mt-2">Retourner</button>
+                                    </form>
 
-                                    <select name="etat" class="form-select">
-                                        <option value="">Etat du produit</option>
-                                        <option value="1">ok</option>
-                                        <option value="2">abime</option>
-                                    </select>
-
-                                    <p class="mt-2 text-muted" id="dispo_<?= $row['id_objet'] ?>"></p>
-
-                                    <button type="submit" class="btn btn-success mt-2">Retourner</button>
                                 <?php endif; ?>
                             </div>
                         </div>
