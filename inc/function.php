@@ -1,8 +1,8 @@
 <?php
 function bdconnect()
 {
-    // $bdd = mysqli_connect('localhost', 'ETU004356', 'UTQVmBxb', 'db_s2_ETU004356');
-    $bdd = mysqli_connect('localhost', 'root', '', 'base');
+    $bdd = mysqli_connect('localhost', 'ETU004356', 'UTQVmBxb', 'db_s2_ETU004356');
+    // $bdd = mysqli_connect('localhost', 'root', '', 'base');
     return $bdd;
 }
 
@@ -54,6 +54,27 @@ function liste_objet()
     } else {
         return $resultat;
     }
+}
+
+function liste_categorie()
+{
+    $query = "SELECT * FROM categorie_objet";
+    $resultat = mysqli_query(bdconnect(), $query);
+    if (!$resultat) {
+        return 0;
+    } else {
+        return $resultat;
+    }
+}
+
+function filtre_objet_par_categorie($where)
+{
+    $query = "SELECT o.nom_objet, c.nom_categorie, e.date_retour
+              FROM objet o
+              JOIN categorie_objet c ON o.id_categorie = c.id_categorie
+              LEFT JOIN emprunt e ON o.id_objet = e.id_objet AND e.date_retour IS NULL
+              $where";
+    return mysqli_query(bdconnect(), $query);
 }
 
 ?>

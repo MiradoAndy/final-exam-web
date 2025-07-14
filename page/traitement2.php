@@ -1,5 +1,5 @@
 <?php
-    $bdd = mysqli_connect('localhost', 'root', '', 'base');
+    include("../inc/connexion.php");
     include('../inc/function.php');
     
     $email = $_POST['email'];

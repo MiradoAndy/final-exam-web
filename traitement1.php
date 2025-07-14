@@ -1,5 +1,5 @@
 <?php
-include("../inc/connexion.php");
+$bdd = mysqli_connect('localhost', 'root', '', 'base');
 include('../inc/function.php');
 
 $nom = $_POST['nom'];
