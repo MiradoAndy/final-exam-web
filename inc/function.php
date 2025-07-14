@@ -151,4 +151,49 @@ function get_historique_emprunts($id) {
 //         document.getElementById('dispo_' + id).innerText = "Disponible le " + dateDispo;
 //     }
 
+
+function get_nbr_emprunt_retourne() {
+    $query = "SELECT COUNT(*) AS total_retournes FROM emprunt WHERE date_retour IS NOT NULL";
+    $resultat = mysqli_query(bdconnect(), $query);
+    if (!$resultat) {
+        return 0;
+    } else {
+        $data = mysqli_fetch_assoc($resultat);
+        return $data['total_retournes'];
+    }
+}
+
+function nbr_retour_etat() {
+    $query = "
+        SELECT etat, COUNT(*) AS nombre
+        FROM emprunt
+        WHERE date_retour IS NOT NULL AND etat IS NOT NULL
+        GROUP BY etat
+    ";
+    $resultat = mysqli_query(bdconnect(), $query);
+    if (!$resultat) {
+        return 0;
+    } else {
+        return $resultat;
+    }
+}
+
+// $queryTotal = "SELECT COUNT(*) AS total_retournes FROM emprunt WHERE date_retour IS NOT NULL";
+// $resTotal = mysqli_query($conn, $queryTotal);
+// $dataTotal = mysqli_fetch_assoc($resTotal);
+
+// $where = "";
+// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categorie']) && $_POST['categorie'] !== "") {
+//     $id_cat = intval($_POST['categorie']);
+//     $where = "WHERE o.id_categorie = $id_cat";
+// }
+// $resEtat = mysqli_query($conn, $queryParEtat);
+
+function calculerDateRetour(int $nb_jours): string {
+    $date = new DateTime(); // aujourd'hui
+    $date->modify("+$nb_jours days"); // ajouter nb_jours
+    return "Disponible le " . $date->format('Y-m-d');
+}
+
+
 ?>

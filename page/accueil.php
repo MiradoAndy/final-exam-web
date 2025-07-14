@@ -29,6 +29,8 @@ $result = filtre_objet_par_categorie($where);
             <h2>Accueil</h2>
             <a href="../inc/deconnexion.php" class="btn btn-outline-danger">Déconnexion</a>
         </div>
+        <a href="nbrretourne.php" class="btn btn-outline-primary">Nombre de produit retournés</a><br>
+
 
         <form action="" method="post" class="row g-3 align-items-center mb-4">
             <div class="col-md-6">
@@ -79,18 +81,35 @@ $result = filtre_objet_par_categorie($where);
                                 </form>
 
                                 <?php if (empty($row['date_retour'])): ?>
-                                        <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
+                                    <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>">
 
-                                        <label for="nb_jours_<?= $row['id_objet'] ?>" class="form-label">Nombre de jours :</label>
-                                        <select name="nb_jours" id="nb_jours_<?= $row['id_objet'] ?>" class="form-select" onchange="calculerDateRetour(this, <?= $row['id_objet'] ?>)">
-                                            <?php for ($i = 1; $i <= 30; $i++): ?>
-                                                <option value="<?= $i ?>"><?= $i ?> jour<?= $i > 1 ? 's' : '' ?></option>
-                                            <?php endfor; ?>
-                                        </select>
+                                    <label for="nb_jours_<?= $row['id_objet'] ?>" class="form-label">Nombre de jours :</label>
+                                    <select name="nb_jours" id="nb_jours_<?= $row['id_objet'] ?>" class="form-select" onchange="calculerDateRetour(this, <?= $row['id_objet'] ?>)">
+                                        <?php for ($i = 1; $i <= 30; $i++): ?>
+                                            <option value="<?= $i ?>"><?= $i ?> jour<?= $i > 1 ? 's' : '' ?></option>
+                                        <?php endfor; ?>
+                                    </select>
 
-                                        <p class="mt-2 text-muted" id="dispo_<?= $row['id_objet'] ?>"></p>
+                                    <p class="mt-2 text-muted" id="dispo_<?= $row['id_objet'] ?>"></p>
 
-                                        <button type="submit" class="btn btn-success mt-2">Emprunter</button>
+                                    <button type="submit" class="btn btn-success mt-2">Emprunter</button>
+                                <?php endif; ?>
+
+
+
+
+                                <?php if (!empty($row['date_retour'])): ?>
+                                    <input type="hidden" name="id_objet" value="<?= htmlspecialchars($row['id_objet']) ?>"><br>
+
+                                    <select name="etat" class="form-select">
+                                        <option value="">Etat du produit</option>
+                                        <option value="1">ok</option>
+                                        <option value="2">abime</option>
+                                    </select>
+
+                                    <p class="mt-2 text-muted" id="dispo_<?= $row['id_objet'] ?>"></p>
+
+                                    <button type="submit" class="btn btn-success mt-2">Retourner</button>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -101,20 +120,6 @@ $result = filtre_objet_par_categorie($where);
             <div class="alert alert-info text-center">Aucun objet trouvé.</div>
         <?php endif; ?>
     </div>
-
-    <script>
-    function calculerDateRetour(select, id) {
-        const jours = parseInt(select.value);
-        const today = new Date();
-        today.setDate(today.getDate() + jours);
-
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const dd = String(today.getDate()).padStart(2, '0');
-
-        const dateDispo = `${yyyy}-${mm}-${dd}`;
-        document.getElementById('dispo_' + id).innerText = "Disponible le " + dateDispo;
-    }
-    </script>
 </body>
+
 </html>

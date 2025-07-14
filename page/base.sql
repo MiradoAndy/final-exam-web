@@ -36,7 +36,7 @@ CREATE TABLE emprunt (
     id_membre INT,
     date_emprunt DATE,
     date_retour DATE
-);
+    );
 
 -- Membres
 INSERT INTO membre (nom, date_naissance, genre, email, ville, mdp, image_profil) VALUES
